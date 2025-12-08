@@ -420,7 +420,7 @@ For other shells, see https://kislyuk.github.io/argcomplete/#support-for-other-s
     with ThreadPoolExecutor(threads) as executor:
         futures = [executor.submit(write_song, song) for song in all_songs]
 
-        if logging.root.level <= logging.INFO:
+        if logging.root.level <= logging.INFO and not arguments.non_interactive:
             meter = tqdm(as_completed(futures), total=len(futures))
             meter.write("🎺 downloading songs:", stderr)
 
