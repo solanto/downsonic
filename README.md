@@ -25,16 +25,16 @@ For development and other cases: the program's more or less a single file, at `s
 ## usage
 
 ```
-usage: main.py [-h] [--netrc-file NETRC_FILE] [-u USER] [-p PASSWORD] [-b BITRATE] [-F FORMAT] [-e EXTENSION] [-t THREADS] [-f] [-V] [--non-interactive]
+usage: downsonic [-h] [--netrc-file NETRC_FILE] [-u USER] [-p PASSWORD] [-b BITRATE] [-F FORMAT] [-e EXTENSION] [-t THREADS] [-f] [-V] [--non-interactive]
                source destination
 
 examples:
-  main.py music.server.local ~/Music
-  main.py https://music.server.me ~/Music --netrc-file ~/.another-netrc
-  main.py https://music.server.me:1234 ~/Music -F mp3 -b 320
+  downsonic music.server.local ~/Music
+  downsonic https://music.server.me ~/Music --netrc-file ~/.another-netrc
+  downsonic https://music.server.me:1234 ~/Music -F mp3 -b 320
 
 positional arguments:
-  source                OpenSubsonic server to download music from; [http[s]://][host][:port], where port defaults to 80 for http, 443 for https, and 8080
+  source                OpenSubsonic server to download music from; [http[s]://]host[:port], where port defaults to 80 for http, 443 for https, and 8080
                         when unspecified
   destination           destination directory
 
