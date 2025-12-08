@@ -54,8 +54,8 @@ options:
   -t, --threads THREADS
                         maximum number of threads (and parallel network connections) to use while downloading
   -f, --force           (re)download songs even if they're already in the destination directory
-  -V, --verbosity       how much logging to show; `-v` for critical errors (🛑), `-vv` for recoverable errors (⛔️), `-vvv` for warnings (⚠️), `-vvvv` for
-                        info (default), and `-vvvvv` for debug (🪲)
+  -V, --verbosity       how much logging to show; `-v` for critical errors (🛑), `-VV` for recoverable errors (⛔️), `-VVV` for warnings (⚠️), `-VVVV` for
+                        info (default), and `-VVVVV` for debug (🪲)
   --non-interactive     don't show dynamic UI elements, like progress bars
 ```
 
