@@ -12,8 +12,8 @@ dependencies = [
   "tqdm == 4.67.1",
   "python-magic == 0.4.27",
 ]
-description = "A small example package"
-license = "MIT"
+description = "a little command-line utility made to help download all of a user's music from an OpenSubsonic server"
+license = "GPL-3.0-or-later"
 license-files = ["LICENSE.md"]
 name = "downsonic"
 readme = "README.md"
