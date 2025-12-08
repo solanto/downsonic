@@ -52,7 +52,7 @@ else:
 
 
 def path(
-    artist: str,
+    artist: str | None,
     album: str | None = None,
     song: str | None = None,
     extension: str | None = None,
@@ -64,9 +64,10 @@ def path(
     - `path("The Doozers")` → `"The Doozers"`
     - `path("The Doozers", "Becoming an Entity")` → `"The Doozers/Becoming an Entity"`
     - `path("The Doozers", "Becoming an Entity", "5/3", "mp3")` → `"The Doozers/Becoming an Entity/5-3.mp3"`
+    - `path(None, None, "5/3", "mp3")` → `"5-3.mp3"`
 
     :param artist: the name of an artist
-    :type artist: str
+    :type artist: str | None
     :param album: the name of said artist's album
     :type album: str | None
     :param song: the title of said album's song
@@ -76,6 +77,11 @@ def path(
     :return: a `sanitize`d path
     :rtype: str
     """
+
+    if artist == None:
+        assert album == None and not song == None and not extension == None
+
+        return sanitize(song) + "." + extension
 
     result = sanitize(artist)
 
@@ -365,7 +371,7 @@ For other shells, see https://kislyuk.github.io/argcomplete/#support-for-other-s
         song_path = (
             path(song.artist, song.album, song.title, extension)
             if song.artist
-            else sanitize(song.title)
+            else path(None, None, song.title, extension)
         )
 
         with open(song_path, "wb") as file:
@@ -403,7 +409,7 @@ For other shells, see https://kislyuk.github.io/argcomplete/#support-for-other-s
                                 song_path = (
                                     path(song.artist, song.album, song.title, "*")
                                     if song.artist
-                                    else sanitize(song.title)
+                                    else path(None, None, song.title, "*")
                                 )
 
                                 if arguments.force or not glob(song_path):
