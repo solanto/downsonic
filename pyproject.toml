@@ -11,6 +11,7 @@ dependencies = [
   "py-opensonic == 7.0.2",
   "tqdm == 4.67.1",
   "python-magic == 0.4.27",
+  "argcomplete == 3.6.3",
 ]
 description = "a little command-line utility made to help download all of a user's music from an OpenSubsonic server"
 license = "GPL-3.0-or-later"
@@ -18,7 +19,7 @@ license-files = ["LICENSE.md"]
 name = "downsonic"
 readme = "README.md"
 requires-python = ">=3.13.9"
-version = "0.0.1"
+version = "0.0.3"
 
 [[project.authors]]
 email = "person@dandelion.computer"

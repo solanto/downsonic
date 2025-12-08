@@ -20,13 +20,12 @@ On pip systems, for global installation:
 pip install downsonic
 ```
 
-For development and other cases: the program's more or less a single file, at `src/downsonic/main.py`.
+For development and other cases: the program's more or less a single file, at [`src/downsonic/main.py`](src/downsonic/main.py).
 
 ## usage
 
 ```
-usage: downsonic [-h] [--netrc-file NETRC_FILE] [-u USER] [-p PASSWORD] [-b BITRATE] [-F FORMAT] [-e EXTENSION] [-t THREADS] [-f] [-V] [--non-interactive]
-               source destination
+usage: downsonic [-h] [--netrc-file NETRC_FILE] [-u USER] [-p PASSWORD] [-b BITRATE] [-F FORMAT] [-e EXTENSION] [-t THREADS] [-f] [-v] [--non-interactive] [--completions] [-V] source destination
 
 examples:
   downsonic music.server.local ~/Music
@@ -34,18 +33,16 @@ examples:
   downsonic https://music.server.me:1234 ~/Music -F mp3 -b 320
 
 positional arguments:
-  source                OpenSubsonic server to download music from; [http[s]://]host[:port], where port defaults to 80 for http, 443 for https, and 8080
-                        when unspecified
+  source                OpenSubsonic server to download music from; [http[s]://]HOST[:PORT], where port defaults to 80 for http, 443 for https, and 8080 when unspecified
   destination           destination directory
 
 options:
   -h, --help            show this help message and exit
   --netrc-file NETRC_FILE
                         path to a netrc file with login credentials; defaults to `~/.netrc`
-  -u, --user USER       username for server login; see help on `--password`
+  -u, --user USER       username for server login ⚠️ see help on `--password`
   -p, --password PASSWORD
-                        password for server login ⚠️ avoid supplying your passwords through the terminal in plaintext, and instead consider using a netrc
-                        file
+                        password for server login ⚠️ avoid supplying your passwords through the terminal in plaintext, and instead consider using a netrc file
   -b, --bitrate BITRATE
                         target bitrate for transcoded files, in kbps; unspecified or `0` set no limit
   -F, --format FORMAT   audio format; navidrome servers, for example, support `mp3`, `flac`, `aac`, and `raw` (no transcoding)
@@ -54,9 +51,10 @@ options:
   -t, --threads THREADS
                         maximum number of threads (and parallel network connections) to use while downloading
   -f, --force           (re)download songs even if they're already in the destination directory
-  -V, --verbosity       how much logging to show; `-V` for critical errors (🛑), `-VV` for recoverable errors (⛔️), `-VVV` for warnings (⚠️), `-VVVV` for
-                        info (default), and `-VVVVV` for debug (🪲)
+  -v, --verbosity       how much logging to show; `-v` for critical errors (🛑), `-vv` for recoverable errors (⛔️), `-vvv` for warnings (⚠️), `-vvvv` for info (default), and `-vvvvv` for debug (🪲)
   --non-interactive     don't show dynamic UI elements, like progress bars
+  --completions         print instructions to enable shell autocompletion and exit
+  -V, --version         print the program's version and exit
 ```
 
 ## contributing

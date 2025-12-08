@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# PYTHON_ARGCOMPLETE_OK
 
 import sys
 import libopensonic  # pyright: ignore[reportMissingTypeStubs]
@@ -13,6 +14,10 @@ from libopensonic.media.media_types import Child
 from tqdm import tqdm
 from magic import Magic
 from glob import glob
+import argcomplete
+import importlib.metadata
+from importlib.metadata import PackageNotFoundError
+import pathlib
 
 # 🟰 definitions
 
@@ -87,11 +92,16 @@ def path(
 
 # ⚙️ configure arguments
 
-argument_parser = argparse.ArgumentParser()
+more_info_message = "ℹ️ \0 See https://github.com/solanto/downsonic for more information."
+
+argument_parser = argparse.ArgumentParser(
+    description="🎷 downsonic is a little command-line utility made to help download all of a user's music from an OpenSubsonic server.",
+    epilog=more_info_message
+)
 
 argument_parser.add_argument(
     "source",
-    help="OpenSubsonic server to download music from; [http[s]://][host][:port], where port defaults to 80 for http, 443 for https, and 8080 when unspecified",
+    help="OpenSubsonic server to download music from; [http[s]://]HOST[:PORT], where port defaults to 80 for http, 443 for https, and 8080 when unspecified",
 )
 argument_parser.add_argument("destination", help="destination directory")
 argument_parser.add_argument(
@@ -99,7 +109,7 @@ argument_parser.add_argument(
     help="path to a netrc file with login credentials; defaults to `~/.netrc`",
 )
 argument_parser.add_argument(
-    "-u", "--user", help="username for server login; see help on `--password`"
+    "-u", "--user", help="username for server login ⚠️ \0 see help on `--password`"
 )
 argument_parser.add_argument(
     "-p",
@@ -135,16 +145,27 @@ argument_parser.add_argument(
     action="store_true",
 )
 argument_parser.add_argument(
-    "-V",
+    "-v",
     "--verbosity",
     action="count",
     default=0,
-    help="how much logging to show; `-v` for critical errors (🛑), `-vv` for recoverable errors (⛔️), `-vvv` for warnings (⚠️ ), `-vvvv` for info (default), and `-vvvvv` for debug (🪲 )",
+    help="how much logging to show; `-v` for critical errors (🛑), `-vv` for recoverable errors (⛔️), `-vvv` for warnings (⚠️ ), `-vvvv` for info (default), and `-vvvvv` for debug (🪲)",
 )
 argument_parser.add_argument(
     "--non-interactive",
     action="store_true",
     help="don't show dynamic UI elements, like progress bars",
+)
+argument_parser.add_mutually_exclusive_group().add_argument(
+    "--completions",
+    action="store_true",
+    help="print instructions to enable shell autocompletion and exit",
+)
+argument_parser.add_mutually_exclusive_group().add_argument(
+    "-V",
+    "--version",
+    action="store_true",
+    help="print the program's version and exit",
 )
 
 executable = sys.argv[0].split(os.path.sep)[-1]
@@ -154,6 +175,8 @@ examples:
   {executable} music.server.local ~/Music
   {executable} https://music.server.me ~/Music --netrc-file ~/.another-netrc
   {executable} https://music.server.me:1234 ~/Music -F mp3 -b 320"""
+
+argcomplete.autocomplete(argument_parser)
 
 # 🪵 configure logging
 
@@ -207,6 +230,52 @@ def run():
     meter: tqdm | None = None
 
     # 📖 parse & validate arguments
+
+    if "--version" in sys.argv[1:] or "-V" in sys.argv[1:]:
+        try:
+            print(f"🎻 downsonic {importlib.metadata.version("downsonic")}")
+        except PackageNotFoundError:
+            print(
+                f"🤓 downsonic is not installed as a package; check {
+                    pathlib.Path(__file__).parent.resolve().parent.parent.joinpath("pyproject.toml")
+                }:project.version"
+            )
+        
+        print("\n" + more_info_message)
+
+        exit(0)
+
+
+    if "--completions" in sys.argv[1:]:
+        print( # fmt: skip
+"""1️⃣  First, install argcomplete (https://kislyuk.github.io/argcomplete/).
+
+On pipx systems:
+
+    pipx install argcomplete
+
+On pip systems:
+
+    pip install argcomplete
+
+2️⃣  Then, activate argcomplete.
+
+    activate-global-python-argcomplete
+    
+3️⃣  Finally, register completions for downsonic.
+
+On bash and zsh systems:
+
+    eval "$(register-python-argcomplete downsonic)"
+
+On fish systems:
+
+    register-python-argcomplete --shell fish downsonic > ~/.config/fish/completions/downsonic.fish
+
+For other shells, see https://kislyuk.github.io/argcomplete/#support-for-other-shells.
+"""
+        )
+        exit(0)
 
     arguments = argument_parser.parse_args()
 
