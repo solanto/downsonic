@@ -18,6 +18,7 @@ import argcomplete
 import importlib.metadata
 from importlib.metadata import PackageNotFoundError
 import pathlib
+import mimetypes
 
 # 🟰 definitions
 
@@ -91,7 +92,7 @@ def path(
         if song:
             assert extension
 
-            result += "/" + sanitize(song) + "." + extension
+            result += "/" + sanitize(song) + extension
 
     return result
 
@@ -351,21 +352,23 @@ For other shells, see https://kislyuk.github.io/argcomplete/#support-for-other-s
         if meter and logging.root.level <= logging.INFO:
             meter.write(song.title, stderr)
 
-        content = client.stream(song.id, arguments.bitrate, arguments.format).content
+        response = client.stream(song.id, arguments.bitrate, arguments.format)
 
         if arguments.extension:
-            extension = arguments.extension
+            extension = "." + arguments.extension
         else:  # infer extension from mimetype
-            mime_type = mime.from_buffer(content)
+            mimetype = response.headers.get("content-type") or mime.from_buffer(response.content)
 
             extension = (
-                "mp3"
-                if mime_type == "audio/mpeg"
-                else (
-                    "m4a"
-                    if re.match(r"^audio\/(.*\W)?aac(\W.*)?$", mime_type)
-                    else "flac"
-                )
+                     ".mp3"  if mimetype == "audio/mpeg"
+                else ".m4a"  if re.match(r"^audio\/((.*\W)?(aac|mp4a?)(\W.*)?)$", mimetype)
+                else ".flac" if re.match(r"^audio\/(x-)?flac$", mimetype)
+                else ".wav"  if mimetype == "audio/wav"
+                else ".ogg"  if mimetype == "audio/ogg"
+                else ".aiff" if re.match(r"^audio\/(x-)?aiff$", mimetype)
+                else ".wma"  if mimetype == "video/x-ms-asf" or mimetype == "audio/x-ms-wma"
+                else guess   if (guess := mimetypes.guess_extension(mimetype))
+                else ""
             )
 
         song_path = (
@@ -375,7 +378,7 @@ For other shells, see https://kislyuk.github.io/argcomplete/#support-for-other-s
         )
 
         with open(song_path, "wb") as file:
-            file.write(content)
+            file.write(response.content)
 
     # 📂 work in destination directory
 
