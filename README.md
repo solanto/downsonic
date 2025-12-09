@@ -1,5 +1,7 @@
 # downsonic
 
+![PyPI](https://img.shields.io/pypi/v/downsonic)
+
 downsonic is a little command-line utility made to help download all of a user's music from an OpenSubsonic server.
 
 downsonic is meant to fill a similar niche to rsync; it keeps it simple as a transfer utility. It's not as intelligent as rsync—no delta-transfers here—but music libraries tend not to be edited, only added to.
