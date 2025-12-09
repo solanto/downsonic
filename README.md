@@ -8,6 +8,13 @@ downsonic is meant to fill a similar niche to rsync; it keeps it simple as a tra
 
 What sets downsonic apart from rsync for music is that, in working with the OpenSubsonic API, you have the option to transcode your music before downloading it. This can save you considerable space if you'd just like a good-enough copy of your music for the occasional offline listen.
 
+Some of downsonic's other neat features include:
+
+- parallel downloads,
+- skipping already-downloaded songs,
+- inferring song files' extensions from their filetypes,
+- and an interactive progress display.
+
 ## installing
 
 On pipx systems:
