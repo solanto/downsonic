@@ -2,11 +2,11 @@
 
 [![PyPI](https://img.shields.io/pypi/v/downsonic)](https://pypi.org/project/downsonic/)
 
-downsonic is a little command-line utility made to help download all of a user's music from an OpenSubsonic server.
+downsonic is a little command-line utility made to help download all of a user's music from an [OpenSubsonic](https://opensubsonic.netlify.app/) server (like [Navidrome](https://www.navidrome.org/)!).
 
-downsonic is meant to fill a similar niche to rsync; it keeps it simple as a transfer utility. It's not as intelligent as rsync—no delta-transfers here—but music libraries tend not to be edited, only added to.
+downsonic is meant to fill a similar niche to [rsync](https://rsync.samba.org/); it keeps it simple as a transfer utility. It's not as intelligent as rsync—no [delta-transfers](https://download.samba.org/pub/rsync/rsync.1#DESCRIPTION) here—but music libraries tend not to be edited, only added to.
 
-What sets downsonic apart from rsync for music is that, in working with the OpenSubsonic API, you have the option to transcode your music before downloading it. This can save you considerable space if you'd just like a good-enough copy of your music for the occasional offline listen.
+What sets downsonic apart from rsync for music is that, in working with the OpenSubsonic API, you have the option to [transcode](https://en.wikipedia.org/wiki/Transcoding) your music before downloading it. This can save you considerable space if you'd just like a good-enough copy of your music for the occasional offline listen.
 
 Some of downsonic's other neat features include:
 
@@ -17,13 +17,13 @@ Some of downsonic's other neat features include:
 
 ## installing
 
-On pipx systems:
+On [pipx](https://pipx.pypa.io/) systems:
 
 ```bash
 pipx install downsonic
 ```
 
-On pip systems, for global installation:
+On [pip](https://pip.pypa.io/) systems, for global installation:
 
 ```bash
 pip install downsonic
