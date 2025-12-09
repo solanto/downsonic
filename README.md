@@ -1,6 +1,6 @@
 # downsonic
 
-![PyPI](https://img.shields.io/pypi/v/downsonic)
+[![PyPI](https://img.shields.io/pypi/v/downsonic)](https://pypi.org/project/downsonic/)
 
 downsonic is a little command-line utility made to help download all of a user's music from an OpenSubsonic server.
 
