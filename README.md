@@ -24,6 +24,24 @@ pip install downsonic
 
 For development and other cases: the program's more or less a single file, at [`src/downsonic/main.py`](src/downsonic/main.py).
 
+### windows and macos
+
+You'll need to install libmagic binaries.
+
+On pipx systems:
+
+```bash
+pipx inject downsonic python-magic-bin
+```
+
+On pip systems, with global installation:
+
+```bash
+pip install python-magic-bin
+```
+
+For Apple Silicon systems, refer to [libmagic-apple-silicon](https://github.com/SHi-ON/libmagic-apple-silicon).
+
 ## usage
 
 ```
